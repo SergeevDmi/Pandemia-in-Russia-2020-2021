@@ -5,5 +5,6 @@ Russia has been severely affected by the ongoing COVID-19 pandemic, which has sp
 ![Gapminder_district](https://user-images.githubusercontent.com/111016896/201497224-520f1c64-247d-4f21-9d60-3c209c4c90bb.gif)
 [r_all_final_1.xlsx](https://github.com/SergeevDmi/Pandemia-in-Russia-2020-2021/files/9996074/r_all_final_1.xlsx)
 ![Gapminder_NMO_rus](https://user-images.githubusercontent.com/111016896/201497257-97f178be-6396-4d0a-82a7-715e859976ba.gif)
+![Gapminder_NMO_dist](https://user-images.githubusercontent.com/111016896/201497286-6db48a26-4547-4a7b-938c-8f1a1ed02910.gif)
 
 
