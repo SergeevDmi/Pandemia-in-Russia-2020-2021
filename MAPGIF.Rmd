@@ -1,0 +1,553 @@
+---
+title: "mapgif"
+author: "DS"
+date: '2022-10-27'
+output: html_document
+---
+```{r}
+
+library(`ftplottools`)
+library("readxl")
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(ggplot2)
+library(tmaptools)
+library(leaflet)
+library(rgdal)
+library(spdep)
+library(sp) 
+library(RColorBrewer)
+library(raster)
+library(spData)
+library(tmap)
+library(ggpubr)
+library(qwraps2)
+library(gridExtra)
+library(tibble)
+library(ggpp)
+library(arsenal)
+setwd("~/Все/Документы 2021/Charite/Master topic/R code")
+russia <- read_excel("r_all_final_1.xlsx")
+mydata <- read_excel("map.xlsx")
+
+```
+
+
+```{r}
+#setwd("C:/Users/AVGUST/Desktop")
+setwd("~/Все/Документы 2021/Charite/Master topic/R code")
+rus <- load("RUS_adm1.RData")
+
+proj4.str <- CRS("+init=epsg:3413 +lon_0=105")
+gadm.prj <- spTransform(gadm, proj4.str)
+
+# merging all polygons to create data file
+df <- fortify(gadm.prj, region = "ID_1")
+# as some of regions may not be included, again merging process take place
+df2 <- merge(df, gadm.prj, by.x = "id", by.y = "ID_1",group = NL_NAME_1)
+
+mydata$id <- as.character(mydata$id)
+
+mapdata <- inner_join(df2,mydata,by="id")
+
+mapdata1<-mapdata %>% filter(!is.na(mapdata$id ))
+```
+
+```{r}
+
+write.csv2(df, file = "df.csv")
+
+
+centroids_df = as.data.frame(coordinates(gadm.prj))
+
+
+centroids_df$id = unique(mapdata1$id)
+
+# переносим каждое слово на новую строку
+
+centroids_df <- inner_join(centroids_df,mydata,by="id")
+# заменяем имена переменных, созданные по умолчанию
+colnames(centroids_df) = c("long", "lat", "id")
+```
+
+```{r}
+map<-ggplot(mapdata1, aes( x = `long`, y = `lat`, group=group)) +
+  geom_polygon(aes(), color = "black")
+map
+
+```
+
+```{r}
+map2 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR2020), color = "black")+ggtitle("Year:2020")+theme(plot.title = element_text(size = 16, face = "bold"))
+map2
+map3 <- map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR2021), color = "black")+ggtitle("Year:2021 ")+theme(plot.title = element_text(size = 16, face = "bold"))
+map3
+
+```
+```{r}
+DR1 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR1), color = "black")+ggtitle("Year:2020 Month:January ")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR1
+
+
+```
+
+
+```{r}
+
+DR1 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR1), color = "black")+ggtitle("Year:2020 Month:January")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR1
+
+DR2 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR2), color = "black")+ggtitle("Year:2020 Month:February")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR2
+
+DR3 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR3), color = "black")+ggtitle("Year:2020 Month:March")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR3
+
+DR4 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR4), color = "black")+ggtitle("Year:2020 Month:April")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR4
+
+DR5 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR5), color = "black")+ggtitle("Year:2020 Month:May")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR5
+
+DR6 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR6), color = "black")+ggtitle("Year:2020 Month:June")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR6
+
+DR7 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR7), color = "black")+ggtitle("Year:2020 Month:July")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR7
+
+DR8 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR8), color = "black")+ggtitle("Year:2020 Month:August")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR8
+
+DR9 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR9), color = "black")+ggtitle("Year:2020 Month:September")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR9
+
+
+DR10 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR10), color = "black")+ggtitle("Year:2020 Month:October")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR10
+
+
+DR11 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR11), color = "black")+ggtitle("Year:2020 Month:November")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR11
+
+
+DR12 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR12), color = "black")+ggtitle("Year:2020 Month:December")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR12
+map2
+DR13 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR13), color = "black")+ggtitle("Year:2021 Month:January")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR13
+
+DR14 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR14), color = "black")+ggtitle("Year:2021 Month:February")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR14
+
+DR15 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR15), color = "black")+ggtitle("Year:2021 Month:March")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR15
+
+
+DR16 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR16), color = "black")+ggtitle("Year:2021 Month:April")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR16
+
+DR17 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR17), color = "black")+ggtitle("Year:2021 Month:May")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR17
+
+
+
+DR18 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR18), color = "black")+ggtitle("Year:2021 Month:June")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR18
+
+DR19 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR19), color = "black")+ggtitle("Year:2021 Month:July")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR19
+
+DR20 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR20), color = "black")+ggtitle("Year:2021 Month:August")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR20
+
+DR21 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR21), color = "black")+ggtitle("Year:2021 Month:September")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR21
+
+DR22 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR22), color = "black")+ggtitle("Year:2021 Month:October")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR22
+
+DR23 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR23), color = "black")+ggtitle("Year:2021 Month:November")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR23
+
+DR24 <-map +  scale_fill_viridis_c(option = "plasma",direction = -1)+
+    theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        rect = element_blank())+
+  geom_polygon(aes(fill = DR24), color = "black")+ggtitle("Year:2021 Month:December")+theme(plot.title = element_text(size = 16, face = "bold"))
+DR24
+map3
+```
+
+```{r}
+library(magick)
+jpeg(file = "DR1.jpg", quality = 100, width = 1000, height = 1000) 
+DR1
+dev.off()
+
+JPGDR1 <- image_read("DR1.jpg")
+
+jpeg(file = "DR2.jpg", quality = 100, width = 1000, height = 1000) 
+DR2
+dev.off()
+
+JPGDR2 <- image_read("DR2.jpg")
+
+
+
+jpeg(file = "DR3.jpg", quality = 100, width = 1000, height = 1000) 
+DR3
+dev.off()
+
+JPGDR3 <- image_read("DR3.jpg")
+
+
+jpeg(file = "DR4.jpg", quality = 100, width = 1000, height = 1000) 
+DR4
+dev.off()
+
+JPGDR4 <- image_read("DR4.jpg")
+
+jpeg(file = "DR5.jpg", quality = 100, width = 1000, height = 1000) 
+DR5
+dev.off()
+
+JPGDR5 <- image_read("DR5.jpg")
+
+jpeg(file = "DR6.jpg", quality = 100, width = 1000, height = 1000) 
+DR6
+dev.off()
+
+JPGDR6 <- image_read("DR6.jpg")
+
+jpeg(file = "DR7.jpg", quality = 100, width = 1000, height = 1000) 
+DR7
+dev.off()
+
+JPGDR7 <- image_read("DR7.jpg")
+
+jpeg(file = "DR8.jpg", quality = 100, width = 1000, height = 1000) 
+DR8
+dev.off()
+
+JPGDR8 <- image_read("DR8.jpg")
+
+jpeg(file = "DR9.jpg", quality = 100, width = 1000, height = 1000) 
+DR9
+dev.off()
+
+JPGDR9 <- image_read("DR9.jpg")
+
+jpeg(file = "DR10.jpg", quality = 100, width = 1000, height = 1000) 
+DR10
+dev.off()
+
+JPGDR10 <- image_read("DR10.jpg")
+
+
+jpeg(file = "DR11.jpg", quality = 100, width = 1000, height = 1000) 
+DR11
+dev.off()
+
+JPGDR11 <- image_read("DR11.jpg")
+
+
+jpeg(file = "DR12.jpg", quality = 100, width = 1000, height = 1000) 
+DR12
+dev.off()
+
+JPGDR12 <- image_read("DR12.jpg")
+
+jpeg(file = "map3.jpg", quality = 100, width = 1000, height = 1000) 
+map3
+dev.off()
+
+JPMAP3 <- image_read("map3.jpg")
+
+
+
+jpeg(file = "DR13.jpg", quality = 100, width = 1000, height = 1000) 
+DR13
+dev.off()
+
+JPGDR13 <- image_read("DR13.jpg")
+
+
+jpeg(file = "DR14.jpg", quality = 100, width = 1000, height = 1000) 
+DR14
+dev.off()
+
+JPGDR14 <- image_read("DR14.jpg")
+
+
+jpeg(file = "DR15.jpg", quality = 100, width = 1000, height = 1000) 
+DR15
+dev.off()
+
+JPGDR15 <- image_read("DR15.jpg")
+
+jpeg(file = "DR16.jpg", quality = 100, width = 1000, height = 1000) 
+DR16
+dev.off()
+
+JPGDR16 <- image_read("DR16.jpg")
+
+jpeg(file = "DR17.jpg", quality = 100, width = 1000, height = 1000) 
+DR17
+dev.off()
+
+JPGDR17 <- image_read("DR17.jpg")
+
+jpeg(file = "DR18.jpg", quality = 100, width = 1000, height = 1000) 
+DR18
+dev.off()
+
+JPGDR18 <- image_read("DR18.jpg")
+
+jpeg(file = "DR19.jpg", quality = 100, width = 1000, height = 1000) 
+DR19
+dev.off()
+
+JPGDR19 <- image_read("DR19.jpg")
+
+jpeg(file = "DR20.jpg", quality = 100, width = 1000, height = 1000) 
+DR20
+dev.off()
+
+JPGDR20 <- image_read("DR20.jpg")
+
+jpeg(file = "DR21.jpg", quality = 100, width = 1000, height = 1000) 
+DR21
+dev.off()
+
+JPGDR21 <- image_read("DR21.jpg")
+
+jpeg(file = "DR22.jpg", quality = 100, width = 1000, height = 1000) 
+DR22
+dev.off()
+
+JPGDR22 <- image_read("DR22.jpg")
+
+jpeg(file = "DR23.jpg", quality = 100, width = 1000, height = 1000) 
+DR23
+dev.off()
+
+JPGDR23 <- image_read("DR23.jpg")
+
+jpeg(file = "DR24.jpg", quality = 100, width = 1000, height = 1000) 
+DR24
+dev.off()
+
+JPGDR24 <- image_read("DR24.jpg")
+
+jpeg(file = "map2.jpg", quality = 100, width = 1000, height = 1000) 
+map2
+dev.off()
+
+JPMAP2 <- image_read("map2.jpg")
+
+
+```
+
+
+```{r}
+library(magick)
+img <- c(JPGDR1,JPGDR2,JPGDR3,JPGDR4,JPGDR5,JPGDR6,JPGDR7,JPGDR8,JPGDR9,JPGDR10,JPGDR11,JPGDR12,JPMAP2,JPGDR13,JPGDR14,JPGDR15,JPGDR16,JPGDR17,JPGDR18,JPGDR19,JPGDR20,JPGDR21,JPGDR22,JPGDR23,JPGDR24,JPMAP3)
+
+image_append(image_scale(img, "x200"))
+
+```
+
+```{r}
+my.animation<-image_animate(image_scale(img, "1000x1000"), fps = 1, dispose = "previous")
+image_write(my.animation, "map2020-2021.gif")
+my.animation
+
+```
+
