@@ -1,0 +1,38 @@
+---
+title: "install package"
+author: "DS"
+date: '2022-11-26'
+output: html_document
+---
+
+```{r}
+
+library(`ftplottools`)
+library("readxl")
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(sf)
+library(ggplot2)
+library(tmaptools)
+library(leaflet)
+library(rgdal)
+library(spdep)
+library(sp) 
+library(RColorBrewer)
+library(raster)
+library(spData)
+library(tmap)
+library(ggpubr)
+library(qwraps2)
+library(gridExtra)
+library(tibble)
+library(ggpp)
+library(arsenal)
+library(gapminder)
+library(ggplot2)
+library(gganimate)
+library(animation)
+library(abc)
+library(magick)
+```

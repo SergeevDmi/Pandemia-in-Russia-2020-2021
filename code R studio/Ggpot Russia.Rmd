@@ -1,0 +1,225 @@
+---
+title: "Ggpot Russia"
+author: "DS"
+date: '2022-11-26'
+output: html_document
+---
+
+```{r , echo=FALSE}
+gg_2020 <- ggplot(
+  before_russia_all,  aes(x = week ,y = All_case_deaths ,group = Year)
+) +
+  geom_line(color = "grey75", alpha = 0.6)+
+    labs(
+    x = "Weeks", 
+    y = "Deaths",
+    title = "Death rates in Russia compared to historical averages",
+    subtitle = "Number of deaths per weeks from all causes in 2020"
+  )+
+  geom_line(
+    data = pandemia_russia_all2020,
+    color = "firebrick"
+  )+geom_ribbon(
+    data = pandemia_russia_all2020,
+    aes(ymin = pmin(expectdeaths, All_case_deaths), ymax = All_case_deaths, 
+), 
+    fill = "tomato", 
+    alpha = 0.5
+    )+geom_line(
+    data = pandemia_russia_all2020,
+    color = "blue"
+  )+
+  geom_line(
+    data = pandemia_russia_all2020,
+    aes(x = week,y = expectdeaths ),
+    color = "black",
+    inherit.aes = FALSE 
+    )+
+    annotate(
+    "text",
+    x = 20,
+    y = 200000,
+    label = "\npast years\ndeaths",
+    color = "grey60")+
+    annotate(
+    "text",
+    x = 25,
+    y = 220000,
+    label = "422079\nexcess\ndeaths\n(+24,8%)",
+    color = "firebrick")+
+  annotate(
+    "text",
+    x = 10,
+    y = 220000,
+    label = "1702400\nexpect\ndeaths",
+    color = "black")+
+  annotate(
+    "text",
+    x = 40,
+    y = 220000,
+    label = "2124479\nobserved\ndeaths\n2020",
+    color = "blue")+
+  annotate(
+    "segment",
+    x = 26,
+    xend = 24,
+    y = 215000,
+    yend = 160000,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "firebrick"
+    )+
+  annotate(
+    "segment",
+    x = 10,
+    xend = 10,
+    y = 215000,
+    yend = 140000,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "black"
+    )+
+  annotate(
+    "segment",
+    x = 40,
+    xend = 43,
+    y = 215000,
+    yend = 200000,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "blue"
+    )+
+  annotate(
+    "segment",
+    x = 20,
+    xend = 15,
+    y = 195000,
+    yend = 180000,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "grey60"
+    )
+gg_2020
+
+pdf(file = "Fig1.pdf")
+gg_2020
+dev.off()
+```
+
+
+```{r}
+gg_2021 <- ggplot(
+  pandemia_russia_all2020_before_russia,  aes(x = week ,y = All_case_deaths ,group = Year)
+) +
+  geom_line(color = "grey75", alpha = 0.8)+
+    labs(
+    x = "Weeks", 
+    y = "Deaths",
+    title = "Death rates in Russia compared to historical averages",
+    subtitle = "Number of deaths per weeks from all causes  in 2021"
+  ) +
+  geom_line(
+    data = pandemia_russia_all2021,
+    color = "firebrick"
+  )+geom_ribbon(
+    data = pandemia_russia_all2021,
+    aes(ymin = pmin(expectdeaths, All_case_deaths), ymax = All_case_deaths, 
+), 
+    fill = "tomato", 
+    alpha = 0.5
+    )+
+  geom_line(
+    data = pandemia_russia_all2021,
+    color = "blue"
+  )+
+  geom_line(
+    data = pandemia_russia_all2021,
+    aes(x = week,y = expectdeaths ),
+    color = "black",
+    inherit.aes = FALSE 
+    )+
+    annotate(
+    "text",
+    x = 20,
+    y = 220000,
+    label = "2124479\npast year\ndeaths",
+    color = "grey60")+
+    annotate(
+    "text",
+    x = 25,
+    y = 240000,
+    label = "755407\nexcess\ndeaths\n(+44,7%)",
+    color = "firebrick")+
+  annotate(
+    "text",
+    x = 10,
+    y = 240000,
+    label = "1690102\nexpect\ndeaths",
+    color = "black")+
+  annotate(
+    "text",
+    x = 40,
+    y = 240000,
+    label = "2445509\nobserved\ndeaths\n2021",
+    color = "blue")+
+  annotate(
+    "segment",
+    x = 24,
+    xend = 24,
+    y = 225000,
+    yend = 160000,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "firebrick"
+    )+
+  annotate(
+    "segment",
+    x = 10,
+    xend = 10,
+    y = 225000,
+    yend = 145000,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "black"
+    )+
+  annotate(
+    "segment",
+    x = 41,
+    xend = 35,
+    y = 225000,
+    yend = 210000,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "blue"
+    )+
+  annotate(
+    "segment",
+    x = 20,
+    xend = 21,
+    y = 210000,
+    yend = 167755,
+    arrow = arrow(length = unit(0.3, "cm")),
+    color = "grey60"
+    )
+gg_2021
+
+pdf(file = "Fig2.pdf")
+gg_2021
+dev.off()
+
+
+```
+
+```{r}
+gg_all <- ggplot(
+  before_russia_all,  aes(x = week ,y = All_case_deaths ,group = Year)
+) +
+  geom_line(color = "black", alpha = 0.6)+
+    labs(
+    x = "Weeks", 
+    y = "Deaths",
+    title = "Death rates in Russia historical averages",
+    subtitle = "Number of deaths per weeks from all causes"
+  )+
+  geom_smooth(formula = y ~ x, method = "loess",col='red', size=1)+
+  facet_wrap(vars(Year), scales = "free_y")
+
+gg_all
+
+pdf(file = "Fig3.pdf")
+gg_all
+dev.off()
+```
