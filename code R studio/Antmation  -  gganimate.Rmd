@@ -1,0 +1,50 @@
+---
+title: "Antmation  -  gganimate"
+author: "DS"
+date: '2022-11-26'
+output: html_document
+---
+
+```{r}
+
+library(gapminder)
+library(ggplot2)
+library(gganimate)
+library(animation)
+library(gifski)
+ 
+p <- ggplot(pandemia_russia_district ,
+     aes(x = week, y = All_case_deaths , colour =factor(Year))
+    ) +
+   geom_line(
+     data =pandemia_russia_district,
+     color = "firebrick"
+   )+geom_ribbon(
+     data = pandemia_russia_district,
+     aes(ymin = pmin(expectdeaths, All_case_deaths), ymax = All_case_deaths, 
+ ), 
+     fill = "tomato", 
+     alpha = 0.5
+     )+
+   geom_line(
+     data = pandemia_russia_district,
+   )+
+   geom_line(
+     data = pandemia_russia_district,
+     aes(x = week,y = expectdeaths ),
+     color = "black",
+     inherit.aes = FALSE 
+     )+
+    scale_colour_manual(values = c("red", "blue")) +
+    labs(x = "Month", y = "All_case_deaths") +
+    theme(legend.position = "top")
+ p
+ gifcfd <- p+ facet_wrap(~VARNAME_1+ Year,nrow = 3 ) +
+   geom_point() +
+   transition_reveal(week)
+ animate(gifcfd, fps =10,height = 900, width = 900, renderer = gifski_renderer(loop = FALSE))
+anim_save("Gapminder_dist.gif")
+
+
+
+```
