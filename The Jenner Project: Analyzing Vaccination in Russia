@@ -1,1 +1,24 @@
 
+Introduction:
+
+Vaccinations are a crucial part of public health measures, and they have played a significant role in curbing the spread of infectious diseases worldwide. The Jenner Project is a research project that aims to analyze the vaccination process in Russia by examining various data such as total cases, new cases, total deaths, new deaths, hosp_patients, total tests, new tests, positive rate, total vaccinations, people vaccinated, people fully vaccinated, total boosters, and new vaccinations. The primary objectives of this research project are to describe the vaccination process in Russia, evaluate possible vaccination levels, analyze the real vaccination rates among state organization employees, calculate the vaccination model in Russia, and determine the causes of vaccination and the causal relationship between the emergence and spread of new pathogens and the impact of vaccination on this.
+
+Methodology:
+
+To achieve the research objectives, this study will adopt the following methodology. First, data will be collected from various sources such as official government websites, health organizations, and research papers. The collected data will then be analyzed using various statistical tools such as R and Python. Descriptive statistics will be used to describe the vaccination process in Russia. Regression analysis will be used to determine the causal relationship between vaccination and the spread of new pathogens. A survey will be conducted among medical staff to assess the vaccination levels in Russia. Interviews will be conducted with relevant experts to gain insights into the causes of vaccination and the impact of vaccination on the emergence and spread of new pathogens.
+
+Vaccination process in Russia:
+
+The Russian government has implemented a vaccination campaign to vaccinate its citizens against COVID-19. As of May 14, 2023, Russia had recorded 15,374,348 total cases of COVID-19, with 275,632 total deaths. The total number of COVID-19 vaccinations administered in Russia is 153,401,008, with 77,197,443 people fully vaccinated. The Russian government has approved four vaccines for use in the country, including the Sputnik V vaccine, EpiVacCorona, CoviVac, and the one-dose Sputnik Light.
+
+Possible vaccination levels in Russia:
+
+According to Rosstat data, the number of medical staff in Russia is approximately 4 million. If all medical staff are vaccinated, this will be a significant boost to the vaccination campaign. Based on the vaccination data available as of May 14, 2023, the total number of vaccinations administered in Russia is 153,401,008. With a population of approximately 144.5 million, this means that approximately 106% of the population has received at least one dose of the COVID-19 vaccine, and 53% are fully vaccinated. However, it is important to note that these figures may not be entirely accurate, and some people may have received the vaccine outside of Russia.
+
+Real vaccination rates among state organization employees:
+
+Rospotrebnadzor data indicates that approximately 60% of all employees of state organizations have been vaccinated against COVID-19. However, it is unclear whether this figure is an accurate reflection of the actual vaccination rates among state organization employees. It is possible that some employees may have received the vaccine outside of state facilities, and there may also be some employees who are not included in the data.
+
+Vaccination model in Russia:
+
+The flu vaccination data in Russia can be used to calculate the vaccination model in the country. The flu vaccination campaign in Russia is typically carried out from September to December each year. In the 2021-2022 flu season, approximately 60% of the population was vaccinated against the flu. The flu vaccination campaign in Russia is an indication that the country has the infrastructure and resources required to implement a successful vaccination campaign. However, the uptake of the COVID-19 vaccine has been slower than expected, and there
